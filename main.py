@@ -39,18 +39,33 @@ def ref(inputMatrix):
             if matrix[j][indexColumnOfLeadingElement]:
                 matrix = xorRowsInMatrix(matrix, indexForNextPositionOfLeadRow - 1, j)
 
+def rref(inputMatrix):
+    matrix = inputMatrix.copy()
+    matrix = ref(matrix)
+    rows = matrix.shape[0]
+    columns = matrix.shape[1]
+
+    for i in range(rows):
+        for j in range(columns):
+            if matrix[i][j]:
+                for k in range(i):
+                    if matrix[k][j]:
+                        matrix = xorRowsInMatrix(matrix, i, k)
+                break
+    return matrix
+
 if __name__ == '__main__':
-    matrix1 = np.array([[False, False, True],
-                        [False,  True, True],
-                        [False,  True, False],
-                        [False,  True, True],
-                        ])
-    # matrix1 = np.array([[True, False, True, True, False, False, False, True, False, False, True],
-    #                     [False, False, False, True, True, True, False, True, False, True, False],
-    #                     [False, False, False, False, True, False, False, True, False, False, True],
-    #                     [True, False, True, False, True, True, True, False, False, False, False],
-    #                     [False, False, False, False, True, False, False, True, True, True, False],
-    #                     [True, False, True, True, True, False, False, False, False, False, False]]
-    #                     )
+    matrix1 = np.array([[True, False, True, True, False, False, False, True, False, False, True],
+                        [False, False, False, True, True, True, False, True, False, True, False],
+                        [False, False, False, False, True, False, False, True, False, False, True],
+                        [True, False, True, False, True, True, True, False, False, False, False],
+                        [False, False, False, False, True, False, False, True, True, True, False],
+                        [True, False, True, True, True, False, False, False, False, False, False]]
+                        )
+    # matrix1 = np.array([[False, False, True],
+    #                     [False,  True, True],
+    #                     [False,  True, False],
+    #                     [False,  True, True],
+    #                     ])
     print(ref(matrix1))
-    print(matrix1)
+    print(rref(matrix1))
